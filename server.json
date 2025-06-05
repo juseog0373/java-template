@@ -1,0 +1,12 @@
+{
+  "apps": [
+    {
+      "name": "template-api",
+      "script": "java",
+      "args": [
+        "-jar",
+        "./build/libs/app.jar"
+      ]
+    }
+  ]
+}
