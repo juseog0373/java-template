@@ -126,17 +126,30 @@ $ ./graclew clean bootJar
         1. 날짜 시간 전체를 표기 하는 경우 접미사는 At을 사용 ex) key : createdAt, value: 2024-09-01 00:00:00
         2. 날짜만 표기할 시 Date 로 표기 ex) key: createdDate, value: 2024-09-01
         3. 시간만 표기할경우 Time 으로 표기 ex) eky: createdTime, value: 00:00:00
-* get api 설계시, return json 직렬화는 .builder() 패턴을 사용해주세요.
+* get api 설계시, Builder 패턴을 사용해주세요.
 
 # 협업시 주의사항
-- api 설계시, end point url restful 하게 작성해주세요.
+- api 설계시, EndPoint URI 작성 규칙을 따라주세요.
+    * URI는 정보의 자원을 표현해야 한다.
+    * 자원에 대한 행위는 HTTP Method(GET, PUT, POST, DELETE 등)로 표현한다.
+    * resource는 동사보다는 명사를, 대문자보다는 소문자를 사용한다.
+      * 단, 컨트롤 자원을 의미하는 URL 예외적으로 동사를 허용한다.
+      * ex) POST /posts/**duplicate**
+    * resource의 도큐먼트 이름으로는 단수 명사를 사용해야 한다.
+    * resource의 컬렉션 이름으로는 복수 명사를 사용해야 한다.
+      * ex) GET /Member/1 -> GET /members/1
+    * _(underbar) 대신 -(dash)를 사용한다.
+    * 성공에 대한 응답 코드는 2xx 으로 전달한다.
+    * 실패에 대한 응답 코드는 4xx 으로 전달한다.
+    * 5xx 에러는 가능한 사용자에게 나타내지 말아주세요.
+      * 즉, API server는 발생 가능한 모든 에러를 핸들링해야한다.
 - git 에 push 할 때 반드시 "실행 가능한" 상태로 push 해주세요.
     - 만약 env 및 타 라이브러리를 사용해 실행이 필요할경우 readme 및 해당 Repository 에 반드시 공지를 해주세요.
 - 컨플릭트는 "발견한 사람" 이 수정해서 업로드 해주세요.
     - 가급적 짧은 기능 단위로 push, 자주 push 하여 컨플릭트 상태를 오래 유지하지 않도록 해주세요.
 - entity 같이 다른 사람과 함께쓰는 파일은 바로 바로 push 해주세요.
     - ex) entity, repository, util 함수 등과 같은 코드
-- DDL_AUTO 값은 반드시 env로 관리하며, update, none 으로만 유지해주세요.
+- DDL_AUTO 값은 반드시 env로 관리하며, **UPDATE**, **NONE** 으로만 유지해주세요.
 
 # Database
 * 컬럼 작성시 필수사항
@@ -147,7 +160,7 @@ $ ./graclew clean bootJar
         * 생성일, 수정일, 삭제일은 비즈니스 로직에서는 "가급적" 사용하지 말아주세요 (database 관리 및 파악용도로만 사용)
 * 해당 컬럼이 무엇을 의미하는지 comment 를 작성해 주세요.
 * 특히 enum을 사용하든, string을 사용하든 해당 데이터베이스에 고정적으로 들어가는 값(ex: 상태값 정의 status: "ACTIVE", "EXPIRE" 일 경우에 반드시 작성해주세요.)
-* softDelete 를 원칙으로 사용해 주세요. (추가 적인 요구사항이 없을 경우)
+* softDelete 를 원칙으로 사용해 주세요. (추가적인 요구사항이 없을 경우)
 * database 상에서 (mysql 혹은 postgresql), 날짜 형식의 데이터는 가급적 "UTC Time Zone" 을 사용. (선택사항)
     * 기획 단계 검토 후 Time zone 요구사항을 맞추어야함.
   
