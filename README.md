@@ -81,9 +81,9 @@ $ ./graclew clean bootJar
 - 주입받은 Repository 뿐만 아닌 custom 한 Repository 등, 외부 의존성이 존재하는 경우 해당 레이어에 구현합니다.
 
 ### interface
-- 해당 모듈에서 사용하는 interface 및 type 등을 정의합니다.
+- 도메인 내에서 사용하는 interface 및 enum 등을 정의합니다.
 - infrastructure 레이어에서 사용하는 추상화된 interface 등 도 해당 레이어에 정의해서 사용합니다.
-- 예를들어
+- 예를 들어
     - 나이스페이에서 사용하는 request 및 response 응답 interface 등도 정의합니다.
 
 ### 폴더 구조 예시
